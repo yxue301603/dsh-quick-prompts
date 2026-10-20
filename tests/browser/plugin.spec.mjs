@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { initialDocument } from '../../src/presets.js';
+import { controlContrast } from '../contrast.mjs';
 
 const open = page => page.getByRole('button', { name: '打开快捷指令', exact: true }).click();
 const dialog = page => page.getByRole('dialog', { name: '快捷指令', exact: true });
@@ -7,6 +8,34 @@ const search = page => page.getByRole('searchbox');
 const settings = page => page.getByRole('button', { name: '设置与备份', exact: true }).click();
 
 test.beforeEach(async ({ page }) => { await page.goto('/'); await expect(page.getByRole('button', { name: '打开快捷指令', exact: true })).toBeVisible(); });
+
+test('new prompt controls and form fields remain readable in light and dark themes', async ({ page }) => {
+  for (const theme of ['light', 'dark']) {
+    await page.evaluate(theme => document.body.classList.toggle('dark', theme === 'dark'), theme);
+    await open(page);
+    const create = page.getByRole('button', { name: '新建指令', exact: true });
+    for (const hover of [false, true]) {
+      if (hover) await create.hover();
+      expect((await create.evaluate(controlContrast)).ratio, `${theme} new button contrast`).toBeGreaterThanOrEqual(4.5);
+    }
+    await create.click();
+    for (const name of ['名称', '指令内容', '分类']) {
+      const field = page.getByRole('textbox', { name, exact: true });
+      await expect(field).toBeVisible();
+      expect((await field.evaluate(controlContrast)).ratio, `${theme} ${name} contrast`).toBeGreaterThanOrEqual(4.5);
+    }
+    await expect(page.getByRole('combobox', { name: '使用范围', exact: true })).toBeVisible();
+    await page.getByRole('textbox', { name: '名称', exact: true }).fill(`可见性检查 ${theme}`);
+    await page.getByRole('textbox', { name: '指令内容', exact: true }).fill('检查新建指令的字段和按钮。');
+    const save = page.getByRole('button', { name: '保存指令', exact: true });
+    expect((await save.evaluate(controlContrast)).ratio).toBeGreaterThanOrEqual(4.5);
+    await save.hover();
+    expect((await save.evaluate(controlContrast)).ratio).toBeGreaterThanOrEqual(4.5);
+    await save.click();
+    await expect(dialog(page)).toContainText(`可见性检查 ${theme}`);
+    await page.keyboard.press('Escape');
+  }
+});
 
 test('pinned prompts follow the centered composer across window widths and host spacing', async ({ page }) => {
   const cases = [

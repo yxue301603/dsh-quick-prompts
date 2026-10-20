@@ -3,6 +3,7 @@ import { spawn } from 'node:child_process';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { chromium, expect } from '@playwright/test';
+import { controlContrast } from '../tests/contrast.mjs';
 
 const root = process.cwd();
 const bin = resolve('.cache/runtime/node_modules/@deepseek-ai/dsh/lib/bin.js');
@@ -91,6 +92,35 @@ try {
   await editor.click();
   await editor.press('Control+z');
   await expect.poll(() => editor.innerText()).toBe(originalDraft);
+  const themeChecks = [];
+  for (const theme of ['light', 'dark']) {
+    await page.emulateMedia({ colorScheme: theme });
+    await expect.poll(() => page.locator('body').evaluate(element => element.hasAttribute('data-ds-dark-theme'))).toBe(theme === 'dark');
+    await page.getByRole('button', { name: '打开快捷指令', exact: true }).click();
+    const create = page.getByRole('button', { name: '新建指令', exact: true });
+    const createContrast = await create.evaluate(controlContrast);
+    expect(createContrast.ratio, `${theme} new prompt button contrast`).toBeGreaterThanOrEqual(4.5);
+    await create.hover();
+    expect((await create.evaluate(controlContrast)).ratio).toBeGreaterThanOrEqual(4.5);
+    await page.screenshot({ path: `artifacts/runtime-palette-${theme}.png`, fullPage: true });
+    await create.click();
+    for (const name of ['名称', '指令内容', '分类']) {
+      const field = page.getByRole('textbox', { name, exact: true });
+      await expect(field).toBeVisible();
+      expect((await field.evaluate(controlContrast)).ratio, `${theme} ${name} contrast`).toBeGreaterThanOrEqual(4.5);
+    }
+    await expect(page.getByRole('combobox', { name: '使用范围', exact: true })).toBeVisible();
+    await page.getByRole('textbox', { name: '名称', exact: true }).fill('检查本次改动');
+    await page.getByRole('textbox', { name: '指令内容', exact: true }).fill('检查当前改动，说明需要修复的问题。');
+    const save = page.getByRole('button', { name: '保存指令', exact: true });
+    const saveContrast = await save.evaluate(controlContrast);
+    expect(saveContrast.ratio, `${theme} save button contrast`).toBeGreaterThanOrEqual(4.5);
+    await save.hover();
+    expect((await save.evaluate(controlContrast)).ratio).toBeGreaterThanOrEqual(4.5);
+    await page.screenshot({ path: `artifacts/runtime-new-prompt-${theme}.png`, fullPage: true });
+    themeChecks.push({ theme, createContrast, saveContrast, formFieldsVisible: true });
+    await page.keyboard.press('Escape');
+  }
   const pins = page.locator('.dqp-pins');
   const card = page.locator('[class*="_card"]').filter({ has: editor }).first();
   const alignment = [];
@@ -116,7 +146,7 @@ try {
     }
     if (override) await override.evaluate(element => element.remove());
   }
-  await writeFile('artifacts/runtime-result.json', JSON.stringify({ release: boot.release, nativePackageInstall: !!archive, pluginInBootGraph: true, clientActivated: true, palette: true, insertion: true, draftPreserved: true, undo: true, alignment, errors }, null, 2));
+  await writeFile('artifacts/runtime-result.json', JSON.stringify({ release: boot.release, nativePackageInstall: !!archive, pluginInBootGraph: true, clientActivated: true, palette: true, insertion: true, draftPreserved: true, undo: true, themeChecks, alignment, errors }, null, 2));
   if (errors.length) throw new Error(`Real DSH client reported ${errors.length} errors. See artifacts/runtime-result.json`);
   console.log(JSON.stringify({ release: boot.release, pluginInBootGraph: true, clientActivated: true, errorCount: errors.length, inspect: 'artifacts/runtime-inspect.json' }));
 } finally {

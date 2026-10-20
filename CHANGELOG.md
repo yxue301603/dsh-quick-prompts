@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.3 — 2026-10-20
+
+- Fix unreadable New Prompt, Save and Insert buttons in the DSH dark theme.
+- Use the host's paired primary-button background and foreground colors.
+- Check button contrast, hover states and form visibility in both themes.
+
 ## 0.1.2 — 2026-10-20
 
 - Align the pinned prompt row with the composer using the host's width and side spacing.
