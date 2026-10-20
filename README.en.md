@@ -8,8 +8,9 @@ above the composer. Nothing is sent automatically.
 
 ## Install
 
-Compatibility baseline: **DeepSeek Harness 0.2.1-rc.2**, Web GUI. The standalone
-Desktop distribution has not been verified separately.
+Supports **DeepSeek Harness 0.2.x from 0.2.0-rc.2**, Desktop and Web GUI.
+Verified with the 0.2.1-rc.2 npm runtime and the Windows Desktop distribution's
+bundled 0.2.0-rc.2 runtime in isolated, headless checks.
 
 In the Desktop plugin manager, use `github:yxue301603/dsh-quick-prompts`.
 For the Web profile:

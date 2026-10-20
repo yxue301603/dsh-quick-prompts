@@ -1,6 +1,6 @@
 {
   "name": "dsh-quick-prompts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "DeepSeek Harness 常用指令快捷面板：置顶、搜索、项目指令和安全的草稿插入。",
   "license": "MIT",
@@ -19,7 +19,7 @@
     "test:runtime": "node scripts/test-runtime.mjs",
     "check": "npm run build && npm run test && npm run test:browser && npm pack --dry-run"
   },
-  "engines": { "node": ">=22.19.0", "dsh": ">=0.2.1-rc.2 <0.3.0" },
+  "engines": { "node": ">=22.19.0", "dsh": ">=0.2.0-rc.2 <0.3.0" },
   "repository": { "type": "git", "url": "git+https://github.com/yxue301603/dsh-quick-prompts.git" },
   "homepage": "https://github.com/yxue301603/dsh-quick-prompts#readme",
   "bugs": { "url": "https://github.com/yxue301603/dsh-quick-prompts/issues" },

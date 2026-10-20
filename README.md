@@ -10,8 +10,8 @@ DeepSeek Harness 原生插件。在输入框旁边打开常用指令面板，搜
 
 ## 安装
 
-本版本以 **DeepSeek Harness 0.2.1-rc.2** 为兼容基线，面向 Web GUI。
-桌面版同样使用 Web 客户端接口，但独立桌面安装包尚未验证。
+兼容 **DeepSeek Harness 0.2.0-rc.2 起的 0.2.x 版本**，面向桌面版和 Web GUI。
+已在 0.2.1-rc.2 npm 运行时及 Windows 桌面安装包自带的 0.2.0-rc.2 运行时中验证。
 
 在桌面版的插件管理器中，使用以下 GitHub 安装来源：
 
@@ -111,7 +111,7 @@ Windows 浏览器测试默认启动独立的无界面 Edge 临时实例，不连
 ```sh
 npm install --prefix .cache/runtime --ignore-scripts --no-audit --no-fund @deepseek-ai/dsh@0.2.1-rc.2
 npm pack --pack-destination artifacts
-node scripts/test-runtime.mjs --package artifacts/dsh-quick-prompts-0.1.0.tgz
+node scripts/test-runtime.mjs --package artifacts/dsh-quick-prompts-0.1.1.tgz
 ```
 
 构建采用官方 `window.__ModuleLoader__` 客户端格式，并使用：
