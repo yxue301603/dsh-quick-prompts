@@ -91,7 +91,33 @@ try {
   await editor.click();
   await editor.press('Control+z');
   await expect.poll(() => editor.innerText()).toBe(originalDraft);
-  await writeFile('artifacts/runtime-result.json', JSON.stringify({ release: boot.release, nativePackageInstall: !!archive, pluginInBootGraph: true, clientActivated: true, palette: true, insertion: true, draftPreserved: true, undo: true, errors }, null, 2));
+  const pins = page.locator('.dqp-pins');
+  const card = page.locator('[class*="_card"]').filter({ has: editor }).first();
+  const alignment = [];
+  // The dock is a sibling of the padded composer. Check both the hero's narrow
+  // stack and a full-width stack, which reproduces the reported conversation layout.
+  for (const mode of ['hero', 'full-width']) {
+    let override;
+    if (mode === 'full-width') override = await page.addStyleTag({ content: '[class*="_composerHero"]{width:100%!important;align-self:stretch!important}' });
+    for (const width of [1905, 1100, 640, 390]) {
+      await page.setViewportSize({ width, height: 1000 });
+      await expect.poll(async () => {
+        const row = await pins.boundingBox();
+        const input = await card.boundingBox();
+        return row && input ? Math.max(Math.abs(row.x - input.x), Math.abs(row.width - input.width)) : Infinity;
+      }, { message: `Pinned prompts must align with the ${mode} composer at ${width}px` }).toBeLessThan(1);
+      const row = await pins.boundingBox();
+      const input = await card.boundingBox();
+      alignment.push({ mode, viewport: width, row, card: input });
+    }
+    if (mode === 'full-width') {
+      await page.setViewportSize({ width: 1905, height: 1000 });
+      await page.screenshot({ path: 'artifacts/runtime-alignment.png', fullPage: true });
+    }
+    if (override) await override.evaluate(element => element.remove());
+  }
+  await writeFile('artifacts/runtime-result.json', JSON.stringify({ release: boot.release, nativePackageInstall: !!archive, pluginInBootGraph: true, clientActivated: true, palette: true, insertion: true, draftPreserved: true, undo: true, alignment, errors }, null, 2));
+  if (errors.length) throw new Error(`Real DSH client reported ${errors.length} errors. See artifacts/runtime-result.json`);
   console.log(JSON.stringify({ release: boot.release, pluginInBootGraph: true, clientActivated: true, errorCount: errors.length, inspect: 'artifacts/runtime-inspect.json' }));
 } finally {
   if (browser) await browser.close();

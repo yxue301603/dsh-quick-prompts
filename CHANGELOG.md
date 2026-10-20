@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.2 — 2026-10-20
+
+- Align the pinned prompt row with the composer using the host's width and side spacing.
+- Keep pins aligned when resizing the window or using an embedded composer.
+- Add a browser regression check for wide, narrow and host-defined layouts.
+
+## 0.1.1 — 2026-10-20
+
+- Verify compatibility with the Windows Desktop distribution's 0.2.0-rc.2 runtime.
+
 ## 0.1.0 — 2026-10-20
 
 - Native DeepSeek Harness composer palette and four pinned prompt buttons.

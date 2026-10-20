@@ -8,6 +8,33 @@ const settings = page => page.getByRole('button', { name: '设置与备份', exa
 
 test.beforeEach(async ({ page }) => { await page.goto('/'); await expect(page.getByRole('button', { name: '打开快捷指令', exact: true })).toBeVisible(); });
 
+test('pinned prompts follow the centered composer across window widths and host spacing', async ({ page }) => {
+  const cases = [
+    { width: 1600, clearance: '16px', maxWidth: '680px' },
+    { width: 1000, clearance: '28px', maxWidth: '520px' },
+    { width: 640, clearance: '16px', maxWidth: '680px' },
+    { width: 390, clearance: '16px', maxWidth: '680px' },
+    { width: 390, clearance: '8px', maxWidth: 'min(calc(100% - 16px), 952px)' },
+  ];
+  for (const layout of cases) {
+    await page.setViewportSize({ width: layout.width, height: 900 });
+    await page.locator('.host-stage').evaluate((element, layout) => {
+      element.style.setProperty('--dsh-composer-side-clearance', layout.clearance);
+      element.style.setProperty('--dsh-composer-card-max-width', layout.maxWidth);
+    }, layout);
+    const pins = await page.locator('.dqp-pins').boundingBox();
+    const card = await page.locator('.host-composer').boundingBox();
+    expect(Math.abs(pins.x - card.x)).toBeLessThan(1);
+    expect(Math.abs(pins.width - card.width)).toBeLessThan(1);
+    expect(pins.y + pins.height).toBeLessThanOrEqual(card.y + 1);
+    for (const chip of await page.locator('.dqp-pin-chip').all()) {
+      const box = await chip.boundingBox();
+      expect(box.x).toBeGreaterThanOrEqual(card.x - 1);
+      expect(box.x + box.width).toBeLessThanOrEqual(card.x + card.width + 1);
+    }
+  }
+});
+
 test('search and keyboard insertion preserve existing draft and attachments without sending', async ({ page }) => {
   const draft = page.getByRole('textbox', { name: 'Harness 草稿' });
   await draft.fill('已有说明\n');

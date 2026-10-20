@@ -1,6 +1,6 @@
 {
   "name": "dsh-quick-prompts",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "description": "DeepSeek Harness 常用指令快捷面板：置顶、搜索、项目指令和安全的草稿插入。",
   "license": "MIT",

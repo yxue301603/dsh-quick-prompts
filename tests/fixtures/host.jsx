@@ -49,8 +49,10 @@ function Host() {
     <div className="host-title">DeepSeek Harness · isolated composer fixture</div>
     <div className="host-controls"><button onClick={() => { const path = workspace.endsWith('alpha') ? 'C:/projects/beta' : 'C:/projects/alpha'; sessions.byId.test.cwd = path; setWorkspace(path); for (const fn of sessionListeners) fn(); }}>切换项目</button><button onClick={() => document.body.classList.toggle('dark')}>切换主题</button><button onClick={() => { for (const dispose of [...disposers].reverse()) dispose(); disposers = []; }}>卸载插件</button></div>
     <div className="host-placeholder">今天想完成什么？</div>
-    {Pins && <Pins {...componentProps} />}
-    <div className="host-composer"><textarea aria-label="Harness 草稿" ref={element => { editor = element; }} value={input.draft} onChange={event => { documentState = { ...documentState, draft: event.target.value, draftRev: documentState.draftRev + 1 }; publish(); }} /><span className="host-attachment">image-1 · 附件保留</span><div className="host-tools">{Toolbar && <Toolbar {...componentProps} />}<span>{workspace} · Send</span></div></div>
+    <div className="host-stage">
+      {Pins && <Pins {...componentProps} />}
+      <div className="host-input-bar"><div className="host-composer"><textarea aria-label="Harness 草稿" ref={element => { editor = element; }} value={input.draft} onChange={event => { documentState = { ...documentState, draft: event.target.value, draftRev: documentState.draftRev + 1 }; publish(); }} /><span className="host-attachment">image-1 · 附件保留</span><div className="host-tools">{Toolbar && <Toolbar {...componentProps} />}<span>{workspace} · Send</span></div></div></div>
+    </div>
   </>;
 }
 window.__ModuleLoader__ = { load(entry) { const plugin = entry.factory(name => { if (name === 'react') return React; throw new Error(`Unexpected external ${name}`); }); window.__test.plugin = plugin; plugin.apply(ctx); } };

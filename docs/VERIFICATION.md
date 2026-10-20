@@ -14,11 +14,12 @@
 | --- | --- |
 | `npm run build` | Pass; prebuilt client bundle generated |
 | `npm test` | 12 tests pass |
-| `npm run test:browser` | 8 browser scenarios pass |
+| `npm run test:browser` | 9 browser scenarios pass |
 | `npm pack --dry-run` | Pass; only plugin/runtime documentation files included |
 | Official DSH plugin-manager installation of the `.tgz` | Pass in an isolated profile |
 | Real DSH boot graph | Plugin present; client activated |
 | Real blank-session composer | Four pinned prompt buttons visible |
+| Pinned-row alignment | Matches composer edges in wide, narrow and host-defined layouts |
 | Real DSH palette | All eight starter prompts visible; search and selection work |
 | Real editor insertion | Prompt inserted; original draft preserved |
 | Real editor undo | Restores the original draft |
@@ -46,7 +47,7 @@ npm ci
 npm run build
 npm install --prefix .cache/runtime --ignore-scripts --no-audit --no-fund @deepseek-ai/dsh@0.2.1-rc.2
 npm pack --pack-destination artifacts
-node scripts/test-runtime.mjs --package artifacts/dsh-quick-prompts-0.1.1.tgz
+node scripts/test-runtime.mjs --package artifacts/dsh-quick-prompts-0.1.2.tgz
 ```
 
 The script uses its own `.cache/runtime-installed-home`, workspace, and loopback

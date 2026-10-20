@@ -111,7 +111,7 @@ Windows 浏览器测试默认启动独立的无界面 Edge 临时实例，不连
 ```sh
 npm install --prefix .cache/runtime --ignore-scripts --no-audit --no-fund @deepseek-ai/dsh@0.2.1-rc.2
 npm pack --pack-destination artifacts
-node scripts/test-runtime.mjs --package artifacts/dsh-quick-prompts-0.1.1.tgz
+node scripts/test-runtime.mjs --package artifacts/dsh-quick-prompts-0.1.2.tgz
 ```
 
 构建采用官方 `window.__ModuleLoader__` 客户端格式，并使用：

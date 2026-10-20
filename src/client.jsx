@@ -75,13 +75,13 @@ function createComponents(ctx, store, panels, translate) {
     if (!data.preferences.showPinned || error) return null;
     const pins = selectPrompts(data, { workspace }).filter(p => p.pinned).slice(0, 4);
     if (!pins.length) return null;
-    return <div className="dqp-pins" aria-label={t('pinned')}>{pins.map(prompt => <button key={prompt.id} type="button" className="dqp-pin-chip" title={prompt.content} onPointerDown={e => e.preventDefault()} onClick={() => {
+    return <div className="dqp-pins-seat"><div className="dqp-pins" aria-label={t('pinned')}>{pins.map(prompt => <button key={prompt.id} type="button" className="dqp-pin-chip" title={prompt.content} onPointerDown={e => e.preventDefault()} onClick={() => {
       if (variablesIn(prompt.content).length) open(panel, props.inputActions, 'template', { template: prompt });
       else {
         try { insertPrompt(props.inputActions, prompt.content); remember(prompt.id); }
         catch (error) { open(panel, props.inputActions, 'template', { template: prompt, insertionError: error.message }); }
       }
-    }}>{prompt.title}</button>)}</div>;
+    }}>{prompt.title}</button>)}</div></div>;
   }
 
   function Launcher(props) {
