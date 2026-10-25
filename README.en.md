@@ -1,5 +1,9 @@
 # DSH Quick Prompts
 
+> An individual tool from [DSH Everyday](https://github.com/yxue301603/dsh-everyday-plugins) · [All demos](https://github.com/yxue301603/dsh-everyday-plugins/blob/main/docs/GALLERY.md) · [Shared issue tracker](https://github.com/yxue301603/dsh-everyday-plugins/issues/new/choose)
+
+**Typing the same instruction again? Save it, pin it, or scope it to a project.**
+
 [简体中文](README.md)
 
 A native DeepSeek Harness plugin for the composer. Save frequently used prompts,
@@ -12,11 +16,11 @@ Supports **DeepSeek Harness 0.2.x from 0.2.0-rc.2**, Desktop and Web GUI.
 Verified with the 0.2.1-rc.2 npm runtime and the Windows Desktop distribution's
 bundled 0.2.0-rc.2 runtime in isolated, headless checks.
 
-In the Desktop plugin manager, use `github:yxue301603/dsh-quick-prompts`.
+In the Desktop plugin manager, use `github:yxue301603/dsh-everyday-plugins#path:/packages/dsh-quick-prompts`.
 For the Web profile:
 
 ```sh
-dsh plugin --profile web add github:yxue301603/dsh-quick-prompts
+dsh plugin --profile web add github:yxue301603/dsh-everyday-plugins#path:/packages/dsh-quick-prompts
 ```
 
 Follow Harness's reload/restart prompt, then refresh the page. Use your own profile
@@ -68,3 +72,7 @@ for the real DSH checks and compatibility limits.
 ## License
 
 [MIT](LICENSE)
+
+## Feedback and releases
+
+Use the [shared issue tracker](https://github.com/yxue301603/dsh-everyday-plugins/issues/new/choose) and select this tool. [Pinned downloads and checksums](https://github.com/yxue301603/dsh-everyday-plugins/releases/tag/v0.1.1) · [Contributing](https://github.com/yxue301603/dsh-everyday-plugins/blob/main/CONTRIBUTING.md). The same-name standalone repository remains a compatibility source.

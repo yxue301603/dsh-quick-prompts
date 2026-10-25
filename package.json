@@ -11,7 +11,17 @@
     "./client": "./lib/client.js",
     "./package.json": "./package.json"
   },
-  "files": ["index.js", "lib/client.js", "cordis.patch.yml", "icon.svg", "README.md", "README.en.md", "docs/VERIFICATION.md", "LICENSE"],
+  "files": [
+    "index.js",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "icon.svg",
+    "screenshots.json",
+    "README.md",
+    "README.en.md",
+    "docs/VERIFICATION.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs",
@@ -19,18 +29,37 @@
     "test:runtime": "node scripts/test-runtime.mjs",
     "check": "npm run build && npm run test && npm run test:browser && npm pack --dry-run"
   },
-  "engines": { "node": ">=22.19.0", "dsh": ">=0.2.0-rc.2 <0.3.0" },
-  "repository": { "type": "git", "url": "git+https://github.com/yxue301603/dsh-quick-prompts.git" },
-  "homepage": "https://github.com/yxue301603/dsh-quick-prompts#readme",
-  "bugs": { "url": "https://github.com/yxue301603/dsh-quick-prompts/issues" },
-  "keywords": ["dsh-plugin", "deepseek-harness", "prompts", "shortcuts", "composer"],
+  "engines": {
+    "node": ">=22.19.0",
+    "dsh": ">=0.2.0-rc.2 <0.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yxue301603/dsh-quick-prompts.git"
+  },
+  "homepage": "https://github.com/yxue301603/dsh-everyday-plugins/tree/main/packages/dsh-quick-prompts",
+  "bugs": {
+    "url": "https://github.com/yxue301603/dsh-everyday-plugins/issues/new/choose"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "prompts",
+    "shortcuts",
+    "composer"
+  ],
   "icon": "icon.svg",
   "dsh": {
-    "bundle": { "patch": "./cordis.patch.yml" },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
     "client": {
       "platform": "web",
       "immediately": true,
-      "inject": ["@deepseek-ai/dsh-client-ui-conversation", "@deepseek-ai/dsh-client-locale"]
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-locale"
+      ]
     }
   },
   "devDependencies": {

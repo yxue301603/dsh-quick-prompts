@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "工具箱统一反馈 / Shared toolkit feedback"
+    url: https://github.com/yxue301603/dsh-everyday-plugins/issues/new/choose
+    about: "选择受影响的插件，集中处理安装和使用问题 / Select your tool for installation or usage help"

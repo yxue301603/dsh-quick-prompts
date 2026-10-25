@@ -1,5 +1,9 @@
 # DSH Quick Prompts · 常用指令
 
+> [DSH Everyday 日常工具箱](https://github.com/yxue301603/dsh-everyday-plugins) 的独立插件 · [全部演示](https://github.com/yxue301603/dsh-everyday-plugins/blob/main/docs/GALLERY.md) · [统一反馈](https://github.com/yxue301603/dsh-everyday-plugins/issues/new/choose)
+
+**反复输入同一句话？把它存成指令，搜索、置顶或按项目使用。**
+
 [English](README.en.md)
 
 DeepSeek Harness 原生插件。在输入框旁边打开常用指令面板，搜索或点击指令即可填入当前草稿；置顶指令可以直接点选。
@@ -16,13 +20,13 @@ DeepSeek Harness 原生插件。在输入框旁边打开常用指令面板，搜
 在桌面版的插件管理器中，使用以下 GitHub 安装来源：
 
 ```text
-github:yxue301603/dsh-quick-prompts
+github:yxue301603/dsh-everyday-plugins#path:/packages/dsh-quick-prompts
 ```
 
 使用 `dsh web` 时，在终端运行：
 
 ```sh
-dsh plugin --profile web add github:yxue301603/dsh-quick-prompts
+dsh plugin --profile web add github:yxue301603/dsh-everyday-plugins#path:/packages/dsh-quick-prompts
 ```
 
 安装后按 Harness 的提示重载插件或重启对应的 DSH 进程，再刷新页面。
@@ -126,3 +130,7 @@ node scripts/test-runtime.mjs --package artifacts/dsh-quick-prompts-0.1.3.tgz
 ## License
 
 [MIT](LICENSE)
+
+## 反馈与版本
+
+安装或使用问题请到[工具箱统一反馈](https://github.com/yxue301603/dsh-everyday-plugins/issues/new/choose)，选择本插件名称。[固定版本下载与校验](https://github.com/yxue301603/dsh-everyday-plugins/releases/tag/v0.1.1) · [贡献指南](https://github.com/yxue301603/dsh-everyday-plugins/blob/main/CONTRIBUTING.md)。同名独立仓库仍是兼容安装来源。
